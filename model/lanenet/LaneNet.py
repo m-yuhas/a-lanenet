@@ -48,7 +48,7 @@ class LaneNet(pytorch_lightning.LightningModule):
             self._decoder_instance.to(DEVICE)
         elif self._arch == 'ENetBlock2':
             m = LaneNet()
-            m.load_state_dict(torch.load('log/base_model.pth'))
+            m.load_state_dict(torch.load('enet-carlane-full.pt'))
             self._encoder = ENet_EncoderBlock2(m._encoder)
             self._encoder.to(DEVICE)
             self._decoder_binary = ENet_DecoderEarlyExit(scale_factor=8, in_ch=128, out_ch=2)
@@ -58,7 +58,7 @@ class LaneNet(pytorch_lightning.LightningModule):
             self._decoder_instance.to(DEVICE)
         elif self._arch == 'ENetBlock1':
             m = LaneNet()
-            m.load_state_dict(torch.load('log/base_model.pth'))
+            m.load_state_dict(torch.load('enet-carlane-full.pt'))
             self._encoder = ENet_EncoderBlock1(m._encoder)
             self._encoder.to(DEVICE)
             self._decoder_binary = ENet_DecoderEarlyExit(scale_factor=4, in_ch=64, out_ch=2)
@@ -67,13 +67,13 @@ class LaneNet(pytorch_lightning.LightningModule):
             self._decoder_instance.to(DEVICE)
         elif self._arch == 'ENetBlock0':
             m = LaneNet()
-            m.load_state_dict(torch.load('log/base_model.pth'))
+            m.load_state_dict(torch.load('enet-carlane-full.pt'))
             self._encoder = ENet_EncoderBlock0(m._encoder)
             self._encoder.to(DEVICE)
             self._decoder_binary = ENet_DecoderEarlyExit(scale_factor=2, in_ch=16, out_ch=2)
             self._decoder_binary.to(DEVICE)
 
-            self._decoder_instance = ENet_DecoderEarlyExit(scaler_factor=2, in_ch=16, out_ch=self.no_of_instances)
+            self._decoder_instance = ENet_DecoderEarlyExit(scale_factor=2, in_ch=16, out_ch=self.no_of_instances)
             self._decoder_instance.to(DEVICE)
         else:
             raise("Please select right model.")
